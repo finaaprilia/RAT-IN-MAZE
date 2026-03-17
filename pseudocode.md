@@ -1,41 +1,37 @@
-ALGORITMA RAT IN A MAZE (BACKTRACKING)
+maze = [...]
+path = matriks kosong
+backtrack = 0
 
-START
-    Input maze (matriks N x N, 1 = jalan, 0 = tembok)
-    Inisialisasi path[N][N] dengan nilai 0
-    Tentukan START = (0,0) dan END = (N-1, N-1)
+def solve(x, y):
 
-FUNCTION Solve(x, y)
+    if x di luar batas atau y di luar batas:
+        return False
 
-    IF (x == N-1 AND y == N-1) THEN
-        path[x][y] ← 1
-        Tampilkan maze
-        RETURN True
-    ENDIF
+    if maze[x][y] == tembok atau path[x][y] sudah dikunjungi:
+        return False
 
-    IF (x, y) berada dalam batas maze
-       AND maze[x][y] == 1
-       AND path[x][y] == 0 THEN
+    path[x][y] = 1
+    tampilkan_maze()
 
-        path[x][y] ← 1
-        Tampilkan maze
+    if (x, y) == tujuan:
+        return True
 
-        IF Solve(x+1, y) THEN RETURN True   // bawah
-        IF Solve(x, y+1) THEN RETURN True   // kanan
-        IF Solve(x-1, y) THEN RETURN True   // atas
-        IF Solve(x, y-1) THEN RETURN True   // kiri
+    if solve(x, y+1):
+        return True
 
-        path[x][y] ← 0   // backtracking
-        Tampilkan maze
-    ENDIF
+    if solve(x+1, y):
+        return True
 
-    RETURN False
-END FUNCTION
+    if solve(x-1, y):
+        return True
 
-Panggil Solve(0, 0)
+    if solve(x, y-1):
+        return True
 
-IF hasil False THEN
-    Tampilkan "Tidak ada jalur ditemukan"
-ENDIF
+    path[x][y] = 2
+    backtrack += 1
+    tampilkan_maze()
 
-END
+    return False
+
+solve(0, 0)
